@@ -1,0 +1,19 @@
+loan-approval-api/
+│
+├── data/
+│   └── loan.csv
+│
+├── models/
+│   └── loan_model.pkl
+│
+├── notebooks/
+│   └── training.ipynb
+│
+├── app/
+│   ├── main.py
+│   ├── predict.py
+│   └── schemas.py
+│
+├── requirements.txt
+│
+└── README.md
