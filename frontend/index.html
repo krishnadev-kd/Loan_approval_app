@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanPredict IQ - Premium Loan Approval Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Banner -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>LoanPredict <span class="accent-text">IQ</span></h1>
+            </div>
+            <p class="tagline">Enterprise Machine Learning underwriting model for instant loan risk evaluation and decision analysis.</p>
+            <div class="header-footer">
+                <div class="model-badge">Random Forest v1.2</div>
+                <div class="status-badge"><span class="pulse-dot"></span> System Online</div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Predictor Form Card -->
+            <section class="card form-card">
+                <div class="card-header">
+                    <h2>Loan Application Assessment</h2>
+                    <p class="subtitle">Complete the borrower profile and asset inventory below.</p>
+                </div>
+
+                <form id="predictor-form" novalidate>
+                    <!-- STEP 1: Applicant Profile -->
+                    <div class="form-section">
+                        <h3 class="section-title">1. Applicant Profile</h3>
+                        <div class="form-grid grid-3">
+                            <div class="form-group">
+                                <label for="no_of_dependents">Dependents</label>
+                                <div class="button-group" id="dependents-group">
+                                    <input type="hidden" name="no_of_dependents" id="no_of_dependents" value="0">
+                                    <button type="button" class="btn-select active" data-value="0">0</button>
+                                    <button type="button" class="btn-select" data-value="1">1</button>
+                                    <button type="button" class="btn-select" data-value="2">2</button>
+                                    <button type="button" class="btn-select" data-value="3">3</button>
+                                    <button type="button" class="btn-select" data-value="4">4</button>
+                                    <button type="button" class="btn-select" data-value="5">5+</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Education Level</label>
+                                <div class="radio-card-group">
+                                    <label class="radio-card">
+                                        <input type="radio" name="education" value="Graduate" checked>
+                                        <div class="radio-card-content">
+                                            <span class="radio-title">Graduate</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-card">
+                                        <input type="radio" name="education" value="Not Graduate">
+                                        <div class="radio-card-content">
+                                            <span class="radio-title">Non-Grad</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Employment Status</label>
+                                <div class="radio-card-group">
+                                    <label class="radio-card">
+                                        <input type="radio" name="self_employed" value="No" checked>
+                                        <div class="radio-card-content">
+                                            <span class="radio-title">Salaried</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-card">
+                                        <input type="radio" name="self_employed" value="Yes">
+                                        <div class="radio-card-content">
+                                            <span class="radio-title">Self-Employed</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Financial Details & Requirements -->
+                    <div class="form-section">
+                        <h3 class="section-title">2. Financial Capacity & Loan Requirements</h3>
+                        <div class="form-grid grid-2">
+                            <!-- Income -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="income_annum">Annual Income</label>
+                                    <span class="value-display" id="income-display">₹ 40,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="income_annum" name="income_annum" min="200000" max="10000000" step="10000" value="4000000">
+                                <div class="slider-labels">
+                                    <span>₹2L</span>
+                                    <span>₹1Cr</span>
+                                </div>
+                            </div>
+
+                            <!-- Loan Amount -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="loan_amount">Requested Loan Amount</label>
+                                    <span class="value-display" id="loan-amount-display">₹ 1,20,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="loan_amount" name="loan_amount" min="100000" max="40000000" step="50000" value="12000000">
+                                <div class="slider-labels">
+                                    <span>₹1L</span>
+                                    <span>₹4Cr</span>
+                                </div>
+                            </div>
+
+                            <!-- Loan Term -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="loan_term">Loan Term</label>
+                                    <span class="value-display" id="loan-term-display">10 Years</span>
+                                </div>
+                                <input type="range" class="range-slider" id="loan_term" name="loan_term" min="2" max="20" step="2" value="10">
+                                <div class="slider-labels">
+                                    <span>2 Years</span>
+                                    <span>20 Years</span>
+                                </div>
+                            </div>
+
+                            <!-- CIBIL Score -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="cibil_score">Credit (CIBIL) Score</label>
+                                    <span class="value-display cibil-good" id="cibil-display">700</span>
+                                </div>
+                                <input type="range" class="range-slider" id="cibil_score" name="cibil_score" min="300" max="900" step="5" value="700">
+                                <div class="slider-labels">
+                                    <span class="score-poor">300 (Poor)</span>
+                                    <span class="score-excellent">900 (Excellent)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Asset Portfolio -->
+                    <div class="form-section">
+                        <h3 class="section-title">3. Declared Asset Valuations</h3>
+                        <div class="form-grid grid-2">
+                            <!-- Residential Assets -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="residential_assets_value">Residential Asset Value</label>
+                                    <span class="value-display" id="residential-display">₹ 50,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="residential_assets_value" name="residential_assets_value" min="0" max="30000000" step="50000" value="5000000">
+                                <div class="slider-labels">
+                                    <span>₹0</span>
+                                    <span>₹3Cr</span>
+                                </div>
+                            </div>
+
+                            <!-- Commercial Assets -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="commercial_assets_value">Commercial Asset Value</label>
+                                    <span class="value-display" id="commercial-display">₹ 20,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="commercial_assets_value" name="commercial_assets_value" min="0" max="30000000" step="50000" value="2000000">
+                                <div class="slider-labels">
+                                    <span>₹0</span>
+                                    <span>₹3Cr</span>
+                                </div>
+                            </div>
+
+                            <!-- Luxury Assets -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="luxury_assets_value">Luxury Asset Value</label>
+                                    <span class="value-display" id="luxury-display">₹ 15,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="luxury_assets_value" name="luxury_assets_value" min="0" max="40000000" step="50000" value="15000000">
+                                <div class="slider-labels">
+                                    <span>₹0</span>
+                                    <span>₹4Cr</span>
+                                </div>
+                            </div>
+
+                            <!-- Bank Asset Value -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="bank_asset_value">Bank Assets & Savings</label>
+                                    <span class="value-display" id="bank-display">₹ 10,00,000</span>
+                                </div>
+                                <input type="range" class="range-slider" id="bank_asset_value" name="bank_asset_value" min="0" max="20000000" step="50000" value="1000000">
+                                <div class="slider-labels">
+                                    <span>₹0</span>
+                                    <span>₹2Cr</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Area -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit" id="submit-btn">
+                            <span class="btn-text">Evaluate Application</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Landing / Ready Card -->
+            <section class="card landing-card" id="landing-panel">
+                <div class="landing-illustration">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3>Model Ready</h3>
+                <p>Configure the applicant parameters and press "Evaluate Application" to initiate real-time risk assessment.</p>
+                
+                <div class="feature-importance-box">
+                    <h4>Feature Impact Rankings</h4>
+                    <div class="importance-list">
+                        <div class="importance-item">
+                            <div class="importance-info">
+                                <span class="importance-name">CIBIL Score</span>
+                                <span class="importance-weight">High Impact</span>
+                            </div>
+                            <div class="importance-track">
+                                <div class="importance-bar" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="importance-item">
+                            <div class="importance-info">
+                                <span class="importance-name">Loan Amount & Term</span>
+                                <span class="importance-weight">Medium-High</span>
+                            </div>
+                            <div class="importance-track">
+                                <div class="importance-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="importance-item">
+                            <div class="importance-info">
+                                <span class="importance-name">Annual Income</span>
+                                <span class="importance-weight">Medium</span>
+                            </div>
+                            <div class="importance-track">
+                                <div class="importance-bar" style="width: 55%;"></div>
+                            </div>
+                        </div>
+                        <div class="importance-item">
+                            <div class="importance-info">
+                                <span class="importance-name">Asset Coverage</span>
+                                <span class="importance-weight">Supporting</span>
+                            </div>
+                            <div class="importance-track">
+                                <div class="importance-bar" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Panel Card -->
+            <section class="card results-card hidden" id="results-panel">
+                <!-- Prediction Header -->
+                <div class="results-header">
+                    <div class="result-badge-container">
+                        <div class="result-icon-outer" id="result-icon-box">
+                            <!-- SVG will be dynamically injected -->
+                            <div class="result-icon" id="result-icon"></div>
+                        </div>
+                    </div>
+                    <div class="result-status-text">
+                        <span class="result-pretitle">Automated Underwriting Decision</span>
+                        <h2 id="result-status-title">Application Approved</h2>
+                    </div>
+                </div>
+
+                <!-- Diagnostics Summary -->
+                <div class="results-body">
+                    <div class="metric-summary-grid">
+                        <div class="summary-metric-card">
+                            <span class="metric-label">CIBIL Health</span>
+                            <span class="metric-val" id="res-cibil-score">700</span>
+                            <div class="cibil-bar-wrapper">
+                                <div class="cibil-bar-fill" id="res-cibil-fill"></div>
+                            </div>
+                        </div>
+                        <div class="summary-metric-card">
+                            <span class="metric-label">Loan-to-Income Ratio</span>
+                            <span class="metric-val" id="res-lti-ratio">3.0x</span>
+                            <span class="metric-desc">Annual income vs loan amount</span>
+                        </div>
+                        <div class="summary-metric-card">
+                            <span class="metric-label">Declared Assets coverage</span>
+                            <span class="metric-val" id="res-asset-coverage">0.8x</span>
+                            <span class="metric-desc">Total assets value vs loan amount</span>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Table -->
+                    <div class="detail-section">
+                        <h4>Underwriting Variables Profile</h4>
+                        <div class="detail-table">
+                            <div class="table-row">
+                                <span>Income to Loan Ratio</span>
+                                <strong id="val-income-vs-loan">Good (33.3%)</strong>
+                            </div>
+                            <div class="table-row">
+                                <span>Asset Liquidity Index</span>
+                                <strong id="val-asset-liquidity">Normal</strong>
+                            </div>
+                            <div class="table-row">
+                                <span>CIBIL Risk Category</span>
+                                <strong id="val-credit-tier">Moderate Risk</strong>
+                            </div>
+                            <div class="table-row">
+                                <span>Employment Profile</span>
+                                <strong id="val-emp-profile">Salaried Graduate</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Box -->
+                    <div class="recommendation-box" id="recommendation-container">
+                        <h4 id="recommendation-title">Key Underwriting Recommendation</h4>
+                        <p id="recommendation-text">Based on the credit analysis, the borrower has a strong credit score (778) and sufficient bank/liquid assets. Safe to proceed with normal interest rates.</p>
+                    </div>
+
+                    <div class="results-actions">
+                        <button type="button" class="btn-secondary" id="reset-btn">Evaluate Another Applicant</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>

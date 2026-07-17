@@ -1,10 +1,11 @@
 from typing import Annotated, Literal
 import pickle
+import os
 from unittest import result
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from pydantic import BaseModel, Field
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 
 with open("model.pkl", "rb") as f:
     saved_data = pickle.load(f)
@@ -50,3 +51,25 @@ def predict_loan(user_input: UserInput):
     prediction = model.predict(input_df)[0]
     result = "Approved" if prediction == 1 else "Rejected"
     return JSONResponse(status_code=200, content={"prediction": int(prediction), "status": result})
+
+
+# Serve Frontend Assets
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
+
+@app.get("/", response_class=HTMLResponse)
+def read_index():
+    index_path = os.path.join(FRONTEND_DIR, "index.html")
+    with open(index_path, "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
+
+@app.get("/style.css")
+def read_css():
+    css_path = os.path.join(FRONTEND_DIR, "style.css")
+    with open(css_path, "r", encoding="utf-8") as f:
+        return Response(content=f.read(), media_type="text/css")
+
+@app.get("/app.js")
+def read_js():
+    js_path = os.path.join(FRONTEND_DIR, "app.js")
+    with open(js_path, "r", encoding="utf-8") as f:
+        return Response(content=f.read(), media_type="application/javascript")
